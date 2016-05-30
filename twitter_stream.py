@@ -52,7 +52,7 @@ def listen(func, auth):
     listener = EmotionListener()
     myStream = tweepy.Stream(auth=api.auth, listener=listener)
 
-    myStream.filter(languages=['en'], locations=[-125, 25, -65, 50])
+    myStream.filter(languages=['en'], locations=[55, 2, 50, -6])
 
 
 def get_coordinates(tweet):
