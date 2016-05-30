@@ -52,7 +52,7 @@ def listen(func, auth):
     listener = EmotionListener()
     myStream = tweepy.Stream(auth=api.auth, listener=listener)
 
-    myStream.filter(languages=['en'], locations=[55, 2, 50, -6])
+    myStream.filter(languages=['en'], locations=[-6,50,2,56])
 
 
 def get_coordinates(tweet):
@@ -145,7 +145,10 @@ def collect_sample_data(auth, number, geo=False):
     api = tweepy.API(auth)
 
     my_stream = tweepy.Stream(auth=api.auth, listener=Collector(max=number))
-    my_stream.filter(languages=['en'], locations=[-115, 25, -65, 50])
+    #my_stream.filter(languages=['en'], locations=[-115, 25, -65, 50])
+    myStream.filter(languages=['en'], locations=[-6,50,2,56])
+    #71, -67, 19, -180 > -180,19,-67,71
+    #56, 2, 50, -6 > -6,50,2,56
 
 
 
@@ -197,23 +200,23 @@ if __name__ == '__main__':
                                           text_sentiment)
                 emotion = get_emotion(status, text_sentiment)
 
-                # try to get the state
-                if not hasattr(status.place, 'full_name'):
-                    return
-                place_name = status.place.full_name.split(', ')
-                if not len(place_name) > 1:
-                    return
-                state_list = ['AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT',
-                              'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA',
-                              'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD',
-                              'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT',
-                              'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
-                              'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC',
-                              'SD', 'TN', 'TX', 'UM', 'UT', 'VA', 'VI', 'VT',
-                              'WA', 'WI', 'WV', 'WY']
-                state = place_name[1]
-                if state not in state_list:
-                    return
+                # # try to get the state
+                # if not hasattr(status.place, 'full_name'):
+                #     return
+                # place_name = status.place.full_name.split(', ')
+                # if not len(place_name) > 1:
+                #     return
+                # state_list = ['AK', 'AL', 'AR', 'AS', 'AZ', 'CA', 'CO', 'CT',
+                #               'DC', 'DE', 'FL', 'FM', 'GA', 'GU', 'HI', 'IA',
+                #               'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD',
+                #               'ME', 'MH', 'MI', 'MN', 'MO', 'MP', 'MS', 'MT',
+                #               'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
+                #               'OH', 'OK', 'OR', 'PA', 'PR', 'PW', 'RI', 'SC',
+                #               'SD', 'TN', 'TX', 'UM', 'UT', 'VA', 'VI', 'VT',
+                #               'WA', 'WI', 'WV', 'WY']
+                # state = place_name[1]
+                # if state not in state_list:
+                #     return
                 # only use the tweet if we got a sentiment
                 if not isnan(sentiment) and emotion is not None:
                     data = {
@@ -221,7 +224,7 @@ if __name__ == '__main__':
                         'coordinates': get_coordinates(status),
                         'sentiment': sentiment,
                         'emotion': emotion,
-                        'state': state
+                        #'state': state
                     }
                     red.publish('tweet_stream', json.dumps(data))
 
