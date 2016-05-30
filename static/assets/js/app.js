@@ -1,6 +1,6 @@
 
 // set up the basic map window
-var mymap = L.map('mapid').setView([38, -96], 5);
+var mymap = L.map('mapid').setView([52, -2], 5);
 
 // add map background from openstreetmap
 L.tileLayer("https://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
