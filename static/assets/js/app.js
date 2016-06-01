@@ -1,6 +1,6 @@
 
 // set up the basic map window
-var mymap = L.map('mapid').setView([52, -2], 5);
+var mymap = L.map('mapid').setView([52, -2], 6);
 
 // add map background from openstreetmap
 L.tileLayer("https://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
@@ -93,7 +93,7 @@ function pageFullyLoaded(e, $window) {
         // oparse the json string
         var response = JSON.parse(e.data);
 
-        $("#data").text(response.state);
+        $("#data").text(response.tweet);
 
         // show a marker
         var params = {icon: neutralIcon};
